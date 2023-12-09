@@ -50,3 +50,6 @@ Thumbs.db
 
 # Virtual Environment
 venv
+
+# Database
+db.sqlite3
