@@ -1,0 +1,20 @@
+{% extends 'dashboard/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Candidate Management{% endblock title %}
+
+{% block page_heading %}Candidate Management{% endblock page_heading %}
+
+{% block page_content %}
+    {% if error %}
+        <h6 class="alert alert-danger mt-5">{{error}}</h6>
+    {% elif success %}
+        <h6 class="alert alert-success mt-5">{{success}}</h6>
+    {% endif %}
+    <h3>Add Candidate :</h3>
+    <form class="mt-3" method="POST">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+{% endblock page_content %}

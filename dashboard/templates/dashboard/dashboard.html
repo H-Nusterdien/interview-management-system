@@ -1,0 +1,39 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Dashboard{% endblock title %}
+
+{% block page_heading %}Welcome to your dashboard, <strong>{{user.username}}</strong>{% endblock page_heading %}
+
+{% block page_content %}
+    <h3 class="mt-5">Candidates :</h3>
+    <a href="{{add_candidate_url}}">
+        <button class="btn btn-success mt-3" type="submit">Add Candidate</button>
+    </a>
+    <table class="table table-bordered table-striped table-hover align-middle mt-3">
+        <thead>
+            <tr>
+                {% for header in table_of_candidates.table_headers %}
+                <th>{{header}}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for candidate in table_of_candidates.candidates %}
+            <tr>
+                <td>{{candidate.id}}</td>
+                <td>{{candidate.first_name}}</td>
+                <td>{{candidate.last_name}}</td>
+                <td>{{candidate.contact_number}}</td>
+                <td>
+                    <a href="/candidate/{{candidate.id}}/">
+                        <button class="btn btn-primary" type="submit">Manage</button>
+                    </a>
+                    <a href="/candidate/{{candidate.id}}/delete">
+                        <button class="btn btn-danger" type="submit">Delete</button>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock page_content %}
