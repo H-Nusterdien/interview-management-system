@@ -35,7 +35,7 @@ class ManageCandidateView(LoginRequiredMixin, View):
 
         context = {
             'candidate': candidate,
-            
+
             # Candidate Management
             'candidate_base_url': f'/candidate/{id}',
             'candidate_table': {
@@ -59,10 +59,10 @@ class ManageCandidateView(LoginRequiredMixin, View):
 
 class CreateCandidateView(LoginRequiredMixin, View):
     login_url = settings.LOGIN_URL
-    
+
     def get(self, request):
         template = 'candidate_management/create_candidate.html'
-        form = candidate_management_forms.CreateCandidateForm
+        form = candidate_management_forms.CreateCandidateForm()
         context = {
             'form': form,
         }
@@ -70,17 +70,24 @@ class CreateCandidateView(LoginRequiredMixin, View):
         return render(request, template, context)
 
     def post(self, request):
-        pass
+        form = candidate_management_forms.CreateCandidateForm(request.POST)
+        context = BASE_CONTEXT
+        if form.is_valid():
+            form.save()
+            context['success'] = 'Successfully Created a new Candidate'
+            return redirect('/')
+        context['error'] = 'Unsuccessful, please try again'
+        return redirect('/candidate/create/')
 
 
 class UpdateCandidateView(LoginRequiredMixin, View):
     login_url = settings.LOGIN_URL
-    
+
     def get(self, request, id):
         template = 'candidate_management/update_candidate.html'
-        form = candidate_management_forms.UpdateCandidateForm
+        form = candidate_management_forms.UpdateCandidateForm()
         candidate = candidate_management_models.Candidate.objects.get(id=id)
-       
+
         context = {
             'form': form,
             'candidate_base_url': f'/candidate/{id}',
@@ -97,7 +104,7 @@ class UpdateCandidateView(LoginRequiredMixin, View):
 
 class DeleteCandidateView(LoginRequiredMixin, View):
     login_url = settings.LOGIN_URL
-    
+
     def get(self, request, id=id):
         pass
 
