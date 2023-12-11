@@ -1,10 +1,6 @@
 # Interview Management Application
 
-## Introduction
-
 The Interview Management Application is designed to streamline the interview process by providing features for managing candidates, user authentication, and note-taking functionalities.
-
----
 
 ## Features
 
@@ -24,8 +20,6 @@ The Interview Management Application is designed to streamline the interview pro
 - **Add Notes to Candidates:** Users can add notes associated with each candidate, including details about interviews, assessments, or any other relevant information.
 - **View Notes:** Enable users to view all notes related to a specific candidate.
 - **Edit and Delete Notes:** Allow users to modify existing notes and delete notes associated with candidates.
-
----
 
 ## Installation
 
@@ -67,14 +61,10 @@ The Interview Management Application is designed to streamline the interview pro
    http://localhost:8000/
    ```
 
----
-
 ## Configuration
 
 - **Settings:** Check the settings file (`settings.py`) for any critical configurations specific to your deployment environment.
 - **Environment Variables:** Ensure any necessary environment variables are set (if applicable).
-
----
 
 ## Contributing
 
@@ -88,8 +78,6 @@ Contributions to enhance this project are welcome! To contribute:
 6. Create a pull request.
 
 Please adhere to the [Code of Conduct](CODE_OF_CONDUCT.md) when contributing.
-
----
 
 ## License
 
