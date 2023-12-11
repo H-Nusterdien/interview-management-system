@@ -12,17 +12,4 @@ class Note(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:
-        return self.title + "\n" + self.description
-    
-    def create_note(self):
-        pass
-
-    def update_note(self):
-        pass
-
-    def delete_note(self):
-        pass
-
-    def get_note(self):
-        pass
-
+        return f'Title: {self.title} | Description: {self.description}'

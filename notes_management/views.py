@@ -62,15 +62,12 @@ class UpdateNoteView(LoginRequiredMixin, View):
         form = notes_management_forms.UpdateNoteForm()
         note = notes_management_models.Note.objects.get(id=id)
         template = 'notes_management/update_candidate_note.html'
-
         context = {
             'form': form,
             'note': note,
             'delete_candidate_note_url': f'/candidate/{note.candidate.id}/note/{note.id}/delete',
         }
-
         context.update(BASE_CONTEXT)
-
         return render(request, template, context)
 
     def post(self, request, id):

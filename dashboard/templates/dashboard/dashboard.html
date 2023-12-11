@@ -13,26 +13,26 @@
         <thead>
             <tr>
                 {% for header in table_of_candidates.table_headers %}
-                <th>{{header}}</th>
+                    <th>{{header}}</th>
                 {% endfor %}
             </tr>
         </thead>
         <tbody>
             {% for candidate in table_of_candidates.candidates %}
-            <tr>
-                <td>{{candidate.id}}</td>
-                <td>{{candidate.first_name}}</td>
-                <td>{{candidate.last_name}}</td>
-                <td>{{candidate.contact_number}}</td>
-                <td>
-                    <a href="/candidate/{{candidate.id}}/">
-                        <button class="btn btn-primary" type="submit">Manage</button>
-                    </a>
-                    <a href="/candidate/{{candidate.id}}/delete">
-                        <button class="btn btn-danger" type="submit">Delete</button>
-                    </a>
-                </td>
-            </tr>
+                <tr>
+                    <td>{{candidate.id}}</td>
+                    <td>{{candidate.first_name}}</td>
+                    <td>{{candidate.last_name}}</td>
+                    <td>{{candidate.contact_number}}</td>
+                    <td>
+                        <a href="/candidate/{{candidate.id}}/">
+                            <button class="btn btn-primary" type="submit">Manage</button>
+                        </a>
+                        <a href="/candidate/{{candidate.id}}/delete">
+                            <button class="btn btn-danger" type="submit">Delete</button>
+                        </a>
+                    </td>
+                </tr>
             {% endfor %}
         </tbody>
     </table>
