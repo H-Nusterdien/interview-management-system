@@ -109,6 +109,7 @@ class DeleteCandidateView(LoginRequiredMixin, View):
         candidate = candidate_management_models.Candidate.objects.get(id=id)
 
         context = {
+            'candidate_base_url': f'/candidate/{id}',
             'candidate': candidate,
         }
 
