@@ -15,19 +15,28 @@ BASE_CONTEXT = {
         'login': settings.LOGIN_URL,
         'logout': settings.LOGOUT_URL,
     },
-    'candidate_table_headers' : [
+    'candidate_table_headers': [
         'Candidate ID', 'First Name', 'Last Name', 'Contact Number', "Resume", 'Action'
     ],
-    'note_table_headers' : [
+    'note_table_headers': [
         'Note ID', 'Created By', 'Title', 'Description', 'Action'
     ]
 }
 
 
 class ManageCandidateView(LoginRequiredMixin, View):
+    """
+    View to manage candidate details and associated notes.
+
+    Methods:
+    - get: Retrieves and renders candidate details and associated notes.
+    """
     login_url = settings.LOGIN_URL
 
     def get(self, request, id):
+        """
+        GET method to render candidate details and associated notes.
+        """
         template = 'candidate_management/manage_candidate.html'
         candidate = candidate_management_models.Candidate.objects.get(id=id)
         notes = notes_management_models.Note.objects.filter(candidate__id=candidate.id)
@@ -49,9 +58,19 @@ class ManageCandidateView(LoginRequiredMixin, View):
 
 
 class CreateCandidateView(LoginRequiredMixin, View):
+    """
+    View to create a new candidate.
+
+    Methods:
+    - get: Renders the form to create a new candidate.
+    - post: Processes form data to create a new candidate.
+    """
     login_url = settings.LOGIN_URL
 
     def get(self, request):
+        """
+        GET method to render the form for creating a new candidate.
+        """
         template = 'candidate_management/create_candidate.html'
         form = candidate_management_forms.CreateCandidateForm()
         context = {
@@ -61,6 +80,9 @@ class CreateCandidateView(LoginRequiredMixin, View):
         return render(request, template, context)
 
     def post(self, request):
+        """
+        POST method to process form data and create a new candidate.
+        """
         form = candidate_management_forms.CreateCandidateForm(request.POST)
         if form.is_valid():
             form.save()
@@ -69,9 +91,19 @@ class CreateCandidateView(LoginRequiredMixin, View):
 
 
 class UpdateCandidateView(LoginRequiredMixin, View):
+    """
+    View to update candidate details.
+
+    Methods:
+    - get: Renders the form to update candidate details.
+    - post: Processes form data to update candidate details.
+    """
     login_url = settings.LOGIN_URL
 
     def get(self, request, id):
+        """
+        GET method to render the form to update candidate details.
+        """
         template = 'candidate_management/update_candidate.html'
         form = candidate_management_forms.UpdateCandidateForm()
         candidate = candidate_management_models.Candidate.objects.get(id=id)
@@ -84,6 +116,9 @@ class UpdateCandidateView(LoginRequiredMixin, View):
         return render(request, template, context)
 
     def post(self, request, id):
+        """
+        POST method to process form data and update candidate details.
+        """
         form = candidate_management_forms.UpdateCandidateForm(request.POST)
         candidate = candidate_management_models.Candidate.objects.get(id=id)
         if form.is_valid():
@@ -96,9 +131,19 @@ class UpdateCandidateView(LoginRequiredMixin, View):
 
 
 class DeleteCandidateView(LoginRequiredMixin, View):
+    """
+    View to delete a candidate.
+
+    Methods:
+    - get: Renders the confirmation page for deleting a candidate.
+    - post: Processes the deletion of a candidate.
+    """
     login_url = settings.LOGIN_URL
 
     def get(self, request, id):
+        """
+        GET method to render the confirmation page for deleting a candidate.
+        """
         template = 'candidate_management/delete_candidate.html'
         candidate = candidate_management_models.Candidate.objects.get(id=id)
         context = {
@@ -109,6 +154,9 @@ class DeleteCandidateView(LoginRequiredMixin, View):
         return render(request, template, context)
 
     def post(self, request, id):
+        """
+        POST method to process the deletion of a candidate.
+        """
         candidate = candidate_management_models.Candidate.objects.get(id=id)
         candidate.delete()
         return redirect('/')
