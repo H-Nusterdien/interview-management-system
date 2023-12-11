@@ -76,7 +76,6 @@ class CreateCandidateView(LoginRequiredMixin, View):
             form.save()
             context['success'] = 'Successfully Created a new Candidate'
             return redirect('/')
-        context['error'] = 'Unsuccessful, please try again'
         return redirect('/candidate/create/')
 
 
@@ -105,8 +104,19 @@ class UpdateCandidateView(LoginRequiredMixin, View):
 class DeleteCandidateView(LoginRequiredMixin, View):
     login_url = settings.LOGIN_URL
 
-    def get(self, request, id=id):
-        pass
+    def get(self, request, id):
+        template = 'candidate_management/delete_candidate.html'
+        candidate = candidate_management_models.Candidate.objects.get(id=id)
 
-    def post(self, request):
-        pass
+        context = {
+            'candidate': candidate,
+        }
+
+        context.update(BASE_CONTEXT)
+
+        return render(request, template, context)
+
+    def post(self, request, id):
+        candidate = candidate_management_models.Candidate.objects.get(id=id)
+        candidate.delete()
+        return redirect('/')
