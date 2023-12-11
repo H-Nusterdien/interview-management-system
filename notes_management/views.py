@@ -14,7 +14,10 @@ BASE_CONTEXT = {
         'sign_up': settings.SIGN_UP_URL,
         'login': settings.LOGIN_URL,
         'logout': settings.LOGOUT_URL,
-    }
+    },
+    'note_table_headers' : [
+        'Note ID', 'Created By', 'Title', 'Description', 'Action'
+    ]
 }
 
 
@@ -60,15 +63,10 @@ class UpdateNoteView(LoginRequiredMixin, View):
         note = notes_management_models.Note.objects.get(id=id)
         template = 'notes_management/update_candidate_note.html'
 
-        note_table_headers = [
-            'Note ID', 'Created By', 'Title', 'Description', 'Action'
-        ]
-
         context = {
             'form': form,
             'note': note,
             'delete_candidate_note_url': f'/candidate/{note.candidate.id}/note/{note.id}/delete',
-            'note_table_headers': note_table_headers,
         }
 
         context.update(BASE_CONTEXT)
@@ -91,8 +89,17 @@ class UpdateNoteView(LoginRequiredMixin, View):
 class DeleteNoteView(LoginRequiredMixin, View):
     login_url = settings.LOGIN_URL
 
-    def get(self, request):
-        pass
+    def get(self, request, id):
+        template = 'notes_management/delete_candidate_note.html'
+        note = notes_management_models.Note.objects.get(id=id)
+        context = {
+            'candidate_note_base_url': f'/candidate/{note.candidate.id}/note/{note.id}',
+            'note': note,
+        }
+        context.update(BASE_CONTEXT)
+        return render(request, template, context)
 
-    def post(self, request):
-        pass
+    def post(self, request, id):
+        note = notes_management_models.Note.objects.get(id=id)
+        note.delete()
+        return redirect(f'/candidate/{note.candidate.id}/')

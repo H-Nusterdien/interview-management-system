@@ -18,8 +18,8 @@ BASE_CONTEXT = {
     'candidate_table_headers' : [
         'Candidate ID', 'First Name', 'Last Name', 'Contact Number', "Resume", 'Action'
     ],
-    'notes_table_headers' : [
-        'Note ID', 'Title', 'Description', 'Action'
+    'note_table_headers' : [
+        'Note ID', 'Created By', 'Title', 'Description', 'Action'
     ]
 }
 
@@ -46,7 +46,7 @@ class ManageCandidateView(LoginRequiredMixin, View):
             'candidate_note_base_url': f'/candidate/{id}/note',
             'create_candidate_note_url': f'/candidate/{id}/note/create/',
             'notes_table': {
-                'table_headers': BASE_CONTEXT['notes_table_headers'],
+                'table_headers': BASE_CONTEXT['note_table_headers'],
                 'notes': notes,
             },
         }
