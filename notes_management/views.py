@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.conf import settings
 from notes_management import forms, models
+from candidate_management import models as candidate_management_models
 
 
 BASE_CONTEXT = {
@@ -37,14 +38,15 @@ class CreateNoteView(LoginRequiredMixin, View):
         context.update(BASE_CONTEXT)
         return render(request, template, context)
 
-    def post(self, request):
+    def post(self, request, id):
         form = forms.CreateNoteForm(request.POST)
+        candidate = candidate_management_models.Candidate.objects.get(id=id)
         if form.is_valid():
             note = form.save(commit=False)
             note.user = request.user
-            note.candidate = request.candidate
+            note.candidate = candidate
             note.save()
-        return redirect('/')
+        return redirect(f'/candidate/{id}/')
 
 
 class UpdateNoteView(LoginRequiredMixin, View):

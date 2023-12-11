@@ -31,7 +31,7 @@ class ManageCandidateView(LoginRequiredMixin, View):
         template = 'candidate_management/manage_candidate.html'
 
         candidate = candidate_management_models.Candidate.objects.get(id=id)
-        notes = notes_management_models.Note.objects.filter(id=candidate.id)
+        notes = notes_management_models.Note.objects.filter(candidate__id=candidate.id)
 
         context = {
             'candidate': candidate,
