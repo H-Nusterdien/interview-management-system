@@ -71,10 +71,8 @@ class CreateCandidateView(LoginRequiredMixin, View):
 
     def post(self, request):
         form = candidate_management_forms.CreateCandidateForm(request.POST)
-        context = BASE_CONTEXT
         if form.is_valid():
             form.save()
-            context['success'] = 'Successfully Created a new Candidate'
             return redirect('/')
         return redirect('/candidate/create/')
 
@@ -97,8 +95,16 @@ class UpdateCandidateView(LoginRequiredMixin, View):
 
         return render(request, template, context)
 
-    def post(self, request):
-        pass
+    def post(self, request, id):
+        form = candidate_management_forms.UpdateCandidateForm(request.POST)
+        candidate = candidate_management_models.Candidate.objects.get(id=id)
+        if form.is_valid():
+            candidate.first_name = form.cleaned_data['first_name']
+            candidate.last_name = form.cleaned_data['last_name']
+            candidate.contact_number = form.cleaned_data['contact_number']
+            candidate.resume = form.cleaned_data['resume']
+            candidate.save()
+        return redirect(f'/candidate/{id}/')
 
 
 class DeleteCandidateView(LoginRequiredMixin, View):
