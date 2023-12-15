@@ -81,4 +81,4 @@ Please adhere to the [Code of Conduct](CODE_OF_CONDUCT.md) when contributing.
 
 ## License
 
-This project is licensed under the [MIT License]. See the [License](LICENSE.md) file for details.
+This project is licensed under the MIT License. See the [License](LICENSE) file for details.
